@@ -8,6 +8,7 @@ from data_entry import get_date, get_amount, get_category, get_description
 class CSV:
     CSV_FILE = "finance_data.csv"
     COLUMNS = ["date", "amount", "category", "description"]
+    DATE_FORMAT = "%d-%m-%Y"
 
     @classmethod  # has access to class but not instance of it
     def initialise_csv(cls):
@@ -31,6 +32,43 @@ class CSV:
             writer.writerow(new_entry)
         print("Entry created successfully!")
 
+    @classmethod
+    def get_transactions(cls, start_date, end_date):
+        df = pd.read_csv(cls.CSV_FILE)
+        df["date"] = pd.to_datetime(df["date"], format=cls.DATE_FORMAT)
+        start_date = datetime.strptime(start_date, cls.DATE_FORMAT)
+        end_date = datetime.strptime(end_date, cls.DATE_FORMAT)
+
+        mask = (df["date"] >= start_date) & (df["date"] <= end_date)
+        filtered_df = df.loc[mask]
+
+        if filtered_df.empty:
+            print("No transactions found")
+        else:
+            print(
+                f"Transactions from {start_date.strftime(cls.DATE_FORMAT)} to {end_date.strftime(cls.DATE_FORMAT)}"
+            )
+            print(
+                filtered_df.to_string(
+                    index=False,
+                    formatters={"date": lambda x: x.strftime(cls.DATE_FORMAT)},
+                )
+            )
+
+            total_income = filtered_df[filtered_df["category"] == "Income"][
+                "amount"
+            ].sum()
+            total_expenses = filtered_df[filtered_df["category"] == "Expense"][
+                "amount"
+            ].sum()
+
+            print("\nSummary: ")
+            print(f"Total Income: ${total_income:.2f}")
+            print(f"Total Expense: ${total_expenses:.2f}")
+            print(f"Net Savings: ${(total_income - total_expenses):.2f}")
+
+        return filtered_df
+
 
 def add():
     CSV.initialise_csv()
@@ -43,6 +81,7 @@ def add():
     CSV.add_entry(date, amount, category, description)
 
 
-add()
+CSV.get_transactions("01-01-2024", "30-10-2024")
+# add()
 # CSV.initialise_csv()
 # CSV.add_entry("20-07-2024", 40.00, "Income", "Movement task")
