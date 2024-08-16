@@ -22,6 +22,7 @@ def get_amount():
         amount = float(input("Enter the amount: "))
         if amount <= 0:
             raise ValueError("Amount must NOT be negative or zero")
+        return amount
     except ValueError as e:
         print(e)
         return get_amount()
@@ -37,4 +38,4 @@ def get_category():
 
 
 def get_description():
-    return input("Enter a description")
+    return input("Enter a description: ")

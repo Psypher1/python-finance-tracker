@@ -29,8 +29,20 @@ class CSV:
         with open(cls.CSV_FILE, "a", newline="") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=cls.COLUMNS)
             writer.writerow(new_entry)
-        print("Entry made!")
+        print("Entry created successfully!")
 
 
-CSV.initialise_csv()
-CSV.add_entry("20-07-2024", 40.00, "Income", "Movement task")
+def add():
+    CSV.initialise_csv()
+    date = get_date(
+        "Enter the date of the transaction or ENTER for today: ", allow_default=True
+    )
+    amount = get_amount()
+    category = get_category()
+    description = get_description()
+    CSV.add_entry(date, amount, category, description)
+
+
+add()
+# CSV.initialise_csv()
+# CSV.add_entry("20-07-2024", 40.00, "Income", "Movement task")
