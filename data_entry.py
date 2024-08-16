@@ -1,15 +1,40 @@
-import pandas as pd
-import csv
 from datetime import datetime
 
+date_format = "%d-%m-%Y"
+CATEGORIES = {"I": "Income", "E": "Expense "}
 
-class CSV:
-    CSV_FILE = "finance_data.csv"
 
-    @classmethod  # has access to class but not instance of it
-    def initialise_csv(cls):
-        try:
-            pd.read_csv(cls.CSV_FILE)
-        except:
-            df = pd.DataFrame(columns=["date", "amount", "category", "description"])
-            df.to_csv(cls.CSV_FILE, index=False)
+def get_date(prompt, allow_default=False):
+    date_str = input(prompt)
+    if allow_default and not date_str:
+        return datetime.today().strftime(date_format)
+
+    try:
+        valid_date = datetime.strptime(date_str, date_format)
+        return valid_date.strftime(date_format)
+    except ValueError:
+        print("Invalid date format. Must be dd-mm-yyyy")
+        return get_date(prompt, allow_default)
+
+
+def get_amount():
+    try:
+        amount = float(input("Enter the amount: "))
+        if amount <= 0:
+            raise ValueError("Amount must NOT be negative or zero")
+    except ValueError as e:
+        print(e)
+        return get_amount()
+
+
+def get_category():
+    category = input("Enter category: ('I' for Income; 'E' for Expense ) ").upper()
+    if category in CATEGORIES:
+        return CATEGORIES[category]
+
+    print("Invalid category. Enter ('I' for Income; 'E' for Expense )")
+    return get_category()
+
+
+def get_description():
+    return input("Enter a description")
