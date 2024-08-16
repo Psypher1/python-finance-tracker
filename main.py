@@ -46,7 +46,7 @@ class CSV:
             print("No transactions found")
         else:
             print(
-                f"Transactions from {start_date.strftime(cls.DATE_FORMAT)} to {end_date.strftime(cls.DATE_FORMAT)}"
+                f"\nTransactions from {start_date.strftime(cls.DATE_FORMAT)} to {end_date.strftime(cls.DATE_FORMAT)}\n"
             )
             print(
                 filtered_df.to_string(
@@ -81,7 +81,32 @@ def add():
     CSV.add_entry(date, amount, category, description)
 
 
-CSV.get_transactions("01-01-2024", "30-10-2024")
+def main():
+    while True:
+        print("\nWhat would you like to do?")
+        print("1. Add a transaction")
+        print("2. View transactions with summary")
+        print("3. Exit")
+
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            add()
+        elif choice == "2":
+            start_date = get_date("Enter start date: ")
+            end_date = get_date("Enter end date: ")
+            df = CSV.get_transactions(start_date, end_date)
+        elif choice == "3":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice")
+
+
+if __name__ == "__main__":
+    main()
+
+
+# CSV.get_transactions("01-01-2024", "30-10-2024")
 # add()
 # CSV.initialise_csv()
 # CSV.add_entry("20-07-2024", 40.00, "Income", "Movement task")
