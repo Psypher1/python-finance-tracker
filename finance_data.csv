@@ -1,6 +1,21 @@
 date,amount,category,description
-20-07-2024,40.0,Income,Movement task
-31-07-2024,13.67,Income,Balacnce
-02-08-2024,10.0,Expense,Transport
-16-08-2024,30.0,Income,flight
-12-05-2024,15.0,Expense,controller
+01-01-2024,100.0,Income,New Year bonus
+15-01-2024,50.0,Expense,Grocery shopping
+28-01-2024,20.0,Expense,Book purchase
+10-02-2024,200.0,Income,Freelance work
+14-02-2024,30.0,Expense,Valentine's gift
+01-03-2024,60.0,Expense,Utility bill
+12-03-2024,150.0,Income,Part-time job
+25-03-2024,45.0,Expense,Restaurant dinner
+05-04-2024,70.0,Expense,Clothing
+18-04-2024,80.0,Income,Refund
+30-04-2024,25.0,Expense,Coffee shop
+10-05-2024,55.0,Expense,Gas station
+15-05-2024,130.0,Income,Consulting fee
+28-05-2024,35.0,Expense,Online subscription
+04-06-2024,90.0,Expense,Concert ticket
+16-06-2024,160.0,Income,Project bonus
+21-06-2024,40.0,Expense,Pharmacy
+03-07-2024,75.0,Expense,Gym membership
+17-07-2024,110.0,Income,Investment return
+29-07-2024,50.0,Expense,Movie night
