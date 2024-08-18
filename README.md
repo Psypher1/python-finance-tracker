@@ -1,5 +1,7 @@
 # Finance Tracker 
 
+![](/images/graph.png)
+
 ## Usage
 
 1. Create and env
