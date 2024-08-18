@@ -34,6 +34,23 @@ class CSV:
         print("Entry created successfully!")
 
     @classmethod
+    def delete_entry(cls, index):
+        """Deletes a transaction entry from the CSV file."""
+        try:
+            df = pd.read_csv(cls.CSV_FILE)
+            if df.empty:
+                print("Nothing to delete")
+                return
+            if 0 <= index < len(df):
+                df = df.drop(index).reset_index(drop=True)
+                df.to_csv(cls.CSV_FILE, index=False)
+                print("Entry deleted")
+            else:
+                print("Invalid index.")
+        except FileNotFoundError:
+            print("No data to delete")
+
+    @classmethod
     def get_transactions(cls, start_date, end_date):
         df = pd.read_csv(cls.CSV_FILE)
         df["date"] = pd.to_datetime(df["date"], format=cls.DATE_FORMAT)
@@ -82,6 +99,12 @@ def add():
     CSV.add_entry(date, amount, category, description)
 
 
+def delete():
+    """Prompts the user to delete an existing transaction."""
+    index = int(input("Enter the index of the transaction to delete: "))
+    CSV.delete_entry(index)
+
+
 def plot_transactions(df):
     df.set_index("date", inplace=True)
 
@@ -114,7 +137,8 @@ def main():
         print("\nWhat would you like to do?")
         print("1. Add a transaction")
         print("2. View transactions with summary")
-        print("3. Exit")
+        print("3. Delete")
+        print("5. Exit")
 
         choice = input("Enter your choice: ")
         if choice == "1":
@@ -126,6 +150,8 @@ def main():
             if input("Do you want to see a plot? (y/n): ").lower() == "y":
                 plot_transactions(df)
         elif choice == "3":
+            delete()
+        elif choice == "5":
             print("Exiting...")
             break
         else:
