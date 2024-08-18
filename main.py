@@ -34,6 +34,20 @@ class CSV:
         print("Entry created successfully!")
 
     @classmethod
+    def update_entry(cls, index, date, amount, category, description):
+        """Updates an existing transaction entry in the CSV file."""
+        df = pd.read_csv(cls.CSV_FILE)
+        if 0 <= index < len(df):
+            df.at[index, "date"] = date
+            df.at[index, "amount"] = amount
+            df.at[index, "category"] = category
+            df.at[index, "description"] = description
+            df.to_csv(cls.CSV_FILE, index=False)
+            print("Updating...")
+        else:
+            print("Invalid entry. No enty updated")
+
+    @classmethod
     def delete_entry(cls, index):
         """Deletes a transaction entry from the CSV file."""
         try:
@@ -99,6 +113,21 @@ def add():
     CSV.add_entry(date, amount, category, description)
 
 
+def update():
+    """Prompts the user to update an existing transaction."""
+    index = int(input("Enter index of transaction to update: "))
+    date = get_date("Enter the new date of the transaction (dd-mm-yyyy): ")
+    amount = get_amount()
+    category = get_category()
+    description = get_description()
+
+    try:
+        CSV.update_entry(index, date, amount, category, description)
+        print("Transaction updated successfully.")
+    except Exception as e:
+        print(f"Error updating transaction: {e}")
+
+
 def delete():
     """Prompts the user to delete an existing transaction."""
     index = int(input("Enter the index of the transaction to delete: "))
@@ -136,21 +165,24 @@ def main():
     while True:
         print("\nWhat would you like to do?")
         print("1. Add a transaction")
-        print("2. View transactions with summary")
-        print("3. Delete")
+        print("2. Update a transaction")
+        print("3. Delete a transaction")
+        print("4. View transactions with summary")
         print("5. Exit")
 
         choice = input("Enter your choice: ")
         if choice == "1":
             add()
         elif choice == "2":
+            update()
+        elif choice == "3":
+            delete()
+        elif choice == "4":
             start_date = get_date("Enter start date: ")
             end_date = get_date("Enter end date: ")
             df = CSV.get_transactions(start_date, end_date)
             if input("Do you want to see a plot? (y/n): ").lower() == "y":
                 plot_transactions(df)
-        elif choice == "3":
-            delete()
         elif choice == "5":
             print("Exiting...")
             break
