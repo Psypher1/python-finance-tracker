@@ -4,7 +4,6 @@ date,amount,category,description
 28-01-2024,20.0,Expense,Book purchase
 10-02-2024,200.0,Income,Freelance work
 14-02-2024,30.0,Expense,Valentine's gift
-01-03-2024,60.0,Expense,Utility bill
 12-03-2024,150.0,Income,Part-time job
 25-03-2024,45.0,Expense,Restaurant dinner
 05-04-2024,70.0,Expense,Clothing
@@ -19,3 +18,4 @@ date,amount,category,description
 03-07-2024,75.0,Expense,Gym membership
 17-07-2024,110.0,Income,Investment return
 29-07-2024,50.0,Expense,Movie night
+25-08-2024,200.0,Income,straggle money
